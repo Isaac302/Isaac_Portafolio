@@ -4,10 +4,11 @@ import {Linkedin, Github, Instagram} from "lucide-react"
 
 export const Hero = () => {
   return (
-    <section id="sobreMi" className="min-h-dvh flex justify-center items-center -mt-4">
+    <section id="inicio" className="min-h-screen flex justify-center items-center">
         <article>
             <h1 className="font-bold text-xl">Hola, soy <span>Isaac</span></h1>
             <div>
+                <h2 className="bg-gray-100 shadow-lg">Desarrollador | Analista</h2>
                 <p>Apasionado por crear experiencias web atractivas y funcionales.</p>
             </div>
             <div className="flex flex-col gap-4 mt-4 border-b pb-4 mb-4">
