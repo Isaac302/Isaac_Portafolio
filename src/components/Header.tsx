@@ -1,75 +1,46 @@
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-
-import{
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-
-} from "@/components/ui/sheet";
-  
-import { Menu } from "lucide-react";
-
+import { useEffect, useState } from "react";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
+import { Menu } from "lucide-react"
 
 export const Header = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10); // Cambia al hacer scroll
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-  <header className="w-full flex justify-center items-cente fixed top-0 z-50">
-    <div className="w-full md:bg-white/90 md:backdrop-blur-md md:shadow-md p-2">
-      <div  className="hidden md:flex  justify-between px-4 flex-1">
-        <h2 className="font-bold text-lg"><a href="#inicio">Isaac</a></h2>
-        <NavigationMenu>
-          <NavigationMenuList>
-
-            <NavigationMenuItem>
-              <NavigationMenuLink href="#inicio" className="hover:text-gray-500">
-                Inicio
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuLink href="#sobreMi" className="hover:text-gray-500">Sobre Mi</NavigationMenuLink>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuLink href="#proyectos" className="hover:text-gray-500">Proyectos</NavigationMenuLink>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-            <NavigationMenuLink href="#servicios" className="hover:text-gray-500">Servicios</NavigationMenuLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <NavigationMenuLink href="#contacto" className="hover:text-gray-500">Contacto</NavigationMenuLink>
-          </NavigationMenuItem>
-          
-          </NavigationMenuList>
-        </NavigationMenu>
+    <header  className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 
+      ${scrolled ? "bg-white/90 backdrop-blur-md shadow-md" : "bg-transparent"}`}>
+      <div className="flex justify-between items-center max-w-5xl mx-auto p-4">
+        <a href="#inicio" className="text-primary text-2xl font-bold hover:scale-105 transition-transform">Isaac</a>
+        <nav className=" hidden md:flex gap-6 text-xl">
+          <a href="#inicio" className="border-b-[1.5px] border-transparent hover:border-primary transition-colors">Inicio</a>
+          <a href="#sobre-mi" className="border-b-[1.5px] border-transparent hover:border-primary transition-colors">Sobre mí</a>
+          <a href="#proyectos" className="border-b-[1.5px] border-transparent hover:border-primary transition-colors">Proyectos</a>
+          <a href="#contacto" className="border-b-[1.5px] border-transparent hover:border-primary transition-colors">Contacto</a>
+        </nav>
       </div>
 
+      <Sheet>
+        <SheetTrigger className="p-2 fixed top-4 right-4 md:hidden z-50 bg-gray-200 rounded-md">
+          <Menu />
+        </SheetTrigger>
+        <SheetContent side="right" className="md:hidden w-[70vw] p-6">
+          <nav className="flex flex-col gap-6 mt-10">
+            <a href="inicio">Inicio</a>
+            <a href="sobre-mi">Sobre mí</a>
+            <a href="proyectos">Proyectos</a>
+            <a href="contacto">Contacto</a>
+          </nav>
+        </SheetContent>
+      </Sheet>
 
-      {/* Menu hidden */}
-      <div className="md:hidden">
-        <Sheet> 
-          <SheetTrigger className="p-2 rounded-md hover:text-gray-500 ">
-            <Menu className="size-6"/>
-          </SheetTrigger>
-          <SheetContent side="right" className="p-6" >
-            <nav className="flex flex-col space-y-4 text-lg pl-2">
-              <a href="#" className="hover:text-gray-500" >Inicio</a>
-              <a href="#" className="hover:text-gray-500" >Sobre Mi</a>
-              <a href="#"  className="hover:text-gray-500" >Proyectos</a>
-              <a href="#" className="hover:text-gray-500" >Servcios</a>
-              <a href="#" className="hover:text-gray-500" >Contacto</a>
-            </nav>
-          </SheetContent>
-        </Sheet>
-      </div>
-
-    </div>
-  </header>
-  );
+    </header>
+  )
 }
